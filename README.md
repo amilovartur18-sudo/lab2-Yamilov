@@ -19,13 +19,15 @@ uv sync
 
 ## Запуск
 
-Справка работает без входных файлов. В остальных примерах замените имена файлов на пути к своим CSV или JSONL.
+Примеры входных файлов находятся в папке `examples`. Выполняйте команды из папки проекта:
 
 ```bash
 uv run python -m streamstats --help
-uv run python -m streamstats analyze events.csv --format csv --output report.json
-uv run python -m streamstats analyze first.jsonl second.jsonl --format jsonl --skip-invalid
+uv run python -m streamstats analyze examples/events.csv --format csv --output report.json
+uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
 ```
+
+Для своих данных замените пути к примерам на пути к своим файлам.
 
 Без `--output` отчёт записывается в `report.json`. Все входные файлы одного запуска должны соответствовать выбранному формату. Исходный файл нельзя использовать в качестве файла отчёта.
 
