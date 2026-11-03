@@ -19,19 +19,27 @@ uv sync
 
 ## Запуск
 
-Пример CSV находится в файле `events.csv`, а примеры JSONL — в папке `examples`. Выполняйте команды из папки проекта:
+Выполняйте команды из папки проекта. Справка:
 
 ```bash
 uv run python -m streamstats --help
-uv run python -m streamstats analyze events.csv --format csv --output report.json
-uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
 ```
 
-После успешного анализа программа сохраняет отчёт в файл и не печатает его в терминале. Чтобы посмотреть отчёт, выполните:
+Анализ примера CSV и просмотр отчёта:
 
 ```bash
+uv run python -m streamstats analyze events.csv --format csv --output report.json
 cat report.json
 ```
+
+Анализ двух примеров JSONL и просмотр отчёта:
+
+```bash
+uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
+cat report.json
+```
+
+После успешного анализа программа записывает отчёт в файл и ничего не печатает в терминале. В обоих примерах отчёт сохраняется в `report.json`; следующий запуск перезапишет этот файл. Используйте `--output другое_имя.json`, чтобы сохранить отчёты отдельно.
 
 Для своих данных замените пути к примерам на пути к своим файлам.
 
