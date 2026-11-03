@@ -27,6 +27,12 @@ uv run python -m streamstats analyze events.csv --format csv --output report.jso
 uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
 ```
 
+После успешного анализа программа сохраняет отчёт в файл и не печатает его в терминале. Чтобы посмотреть отчёт, выполните:
+
+```bash
+cat report.json
+```
+
 Для своих данных замените пути к примерам на пути к своим файлам.
 
 Без `--output` отчёт записывается в `report.json`. Все входные файлы одного запуска должны соответствовать выбранному формату. Исходный файл нельзя использовать в качестве файла отчёта.
