@@ -4,13 +4,22 @@
 
 ## Установка
 
-Требуется Python 3.12 или новее и uv:
+Требуется Python 3.12 или новее, Git и uv. Склонируйте репозиторий и перейдите в его папку:
+
+```bash
+git clone https://github.com/amilovartur18-sudo/lab2-Yamilov.git
+cd lab2-Yamilov
+```
+
+Установите зависимости:
 
 ```bash
 uv sync
 ```
 
 ## Запуск
+
+Справка работает без входных файлов. В остальных примерах замените имена файлов на пути к своим CSV или JSONL.
 
 ```bash
 uv run python -m streamstats --help
