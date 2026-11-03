@@ -1,0 +1,4 @@
+timestamp,level,source,message
+2026-11-03T10:00:00+03:00,INFO,website,Сайт запущен
+2026-11-03T10:05:00+03:00,ERROR,database,Ошибка подключения
+2026-11-03T10:10:00+03:00,CRITICAL,database,База недоступна

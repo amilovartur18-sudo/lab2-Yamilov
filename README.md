@@ -19,11 +19,11 @@ uv sync
 
 ## Запуск
 
-Примеры входных файлов находятся в папке `examples`. Выполняйте команды из папки проекта:
+Пример CSV находится в файле `events.csv`, а примеры JSONL — в папке `examples`. Выполняйте команды из папки проекта:
 
 ```bash
 uv run python -m streamstats --help
-uv run python -m streamstats analyze examples/events.csv --format csv --output report.json
+uv run python -m streamstats analyze events.csv --format csv --output report.json
 uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
 ```
 
