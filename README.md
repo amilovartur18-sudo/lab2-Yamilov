@@ -4,17 +4,25 @@
 
 ## Установка
 
-Требуется Python 3.12 или новее, Git и uv. Склонируйте репозиторий и перейдите в его папку:
+Требуется Python 3.12 или новее и Git. Склонируйте репозиторий и перейдите в его папку:
 
 ```bash
 git clone https://github.com/amilovartur18-sudo/lab2-Yamilov.git
 cd lab2-Yamilov
 ```
 
-Установите зависимости:
+Создайте виртуальное окружение, активируйте его и установите пакет проекта:
 
 ```bash
-uv sync
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+```
+
+Для запуска тестов и проверки кода установите дополнительные инструменты:
+
+```bash
+python -m pip install -r requirements.txt -r requirements-tests.txt
 ```
 
 ## Запуск
@@ -22,20 +30,20 @@ uv sync
 Выполняйте команды из папки проекта. Справка:
 
 ```bash
-uv run python -m streamstats --help
+python -m streamstats --help
 ```
 
 Анализ примера CSV и просмотр отчёта:
 
 ```bash
-uv run python -m streamstats analyze events.csv --format csv --output report.json
+python -m streamstats analyze events.csv --format csv --output report.json
 cat report.json
 ```
 
 Анализ двух примеров JSONL и просмотр отчёта:
 
 ```bash
-uv run python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
+python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --skip-invalid
 cat report.json
 ```
 
@@ -56,9 +64,9 @@ CSV содержит заголовок `timestamp,level,source,message`; в JSO
 ## Проверка
 
 ```bash
-uv run python -m pytest
-uv run python -m pytest --cov=streamstats --cov-report=term-missing
-uv run ruff check .
+python -m pytest
+python -m pytest --cov=streamstats --cov-report=term-missing
+ruff check .
 ```
 
 Команда с `--cov` показывает покрытие кода тестами, включая запуск CLI в отдельных процессах. Строки без покрытия перечислены в колонке `Missing`.

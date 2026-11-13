@@ -5,9 +5,6 @@ description = "Потоковый анализатор событий"
 requires-python = ">=3.12"
 dependencies = []
 
-[dependency-groups]
-dev = ["pytest>=8", "pytest-cov>=7", "ruff>=0.12"]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
