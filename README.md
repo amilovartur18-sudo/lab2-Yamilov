@@ -70,3 +70,69 @@ ruff check .
 ```
 
 Команда с `--cov` показывает покрытие кода тестами, включая запуск CLI в отдельных процессах. Строки без покрытия перечислены в колонке `Missing`.
+
+## Подготовка к защите
+
+Все команды ниже выполняются в папке проекта с активированным окружением `.venv`.
+
+### Показать работу с CSV
+
+```bash
+python -m streamstats analyze events.csv --format csv --output report_csv.json
+cat report_csv.json
+```
+
+В файле три события, поэтому в отчёте `total: 3`. У источника `database` два события, которые учитываются в топе ошибок: одно `ERROR` и одно `CRITICAL`.
+
+### Показать работу с JSONL и несколькими файлами
+
+```bash
+python -m streamstats analyze examples/first.jsonl --format jsonl --output report_one.json
+cat report_one.json
+```
+
+В первом файле два события. Теперь передадим оба файла за один запуск:
+
+```bash
+python -m streamstats analyze examples/first.jsonl examples/second.jsonl --format jsonl --output report_combined.json
+cat report_combined.json
+```
+
+В общем отчёте `total: 3`: два события из первого файла и одно из второго. За один запуск все входные файлы должны иметь выбранный формат.
+
+### Добавить и удалить источник в данных
+
+Источник — значение поля `source`; отдельного списка допустимых источников нет. Создадим временную копию входного файла, чтобы не менять пример из репозитория:
+
+```bash
+demo_dir=$(mktemp -d)
+cp examples/first.jsonl "$demo_dir/events.jsonl"
+nano "$demo_dir/events.jsonl"
+```
+
+В редакторе замените `website` на новый источник, например `mobile_app`. Сохраните файл: Ctrl+O, Enter; выйдите: Ctrl+X. Затем запустите анализ:
+
+```bash
+python -m streamstats analyze "$demo_dir/events.jsonl" --format jsonl --output "$demo_dir/report.json"
+cat "$demo_dir/report.json"
+```
+
+В `by_source` появится `mobile_app`, а `website` исчезнет: в этой копии его больше нет. Программа принимает любое непустое название источника. Если преподаватель попросит изменить **уровень**, а не источник, допустимые уровни находятся в `LEVELS` файла `src/streamstats/models.py`.
+
+### Где показать чтение и анализ
+
+- `src/streamstats/parsers.py`: `parse_jsonl` читает файл в цикле `for line_number, line in enumerate(file, 1)`, а `yield event` передаёт по одному событию.
+- В том же файле `parse_csv` использует `csv.DictReader` и `next(reader)` для последовательного чтения CSV-записей. Одна CSV-запись при необходимости может занимать несколько строк.
+- `src/streamstats/analysis.py`: функция `analyze` проходит по событиям и обновляет счётчики, не сохраняя все события в списке.
+
+Такое чтение позволяет не загружать весь файл в память. Дополнительная память зависит от текущей записи и числа разных источников, для которых хранятся счётчики и строится топ.
+
+### Показать тесты, Ruff и покрытие
+
+```bash
+python -m pytest
+ruff check .
+python -m pytest --cov=streamstats --cov-report=term-missing
+```
+
+`pytest` запускает тесты, Ruff проверяет код, а отчёт покрытия показывает, какие строки выполнялись во время тестов. Если инструменты не установлены, сначала выполните команды установки из раздела «Установка».
