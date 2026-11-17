@@ -109,10 +109,10 @@ cat report_combined.json
 ```bash
 demo_dir=$(mktemp -d)
 cp examples/first.jsonl "$demo_dir/events.jsonl"
-nano "$demo_dir/events.jsonl"
+open -e "$demo_dir/events.jsonl"
 ```
 
-В редакторе замените `website` на новый источник, например `mobile_app`. Сохраните файл: Ctrl+O, Enter; выйдите: Ctrl+X. Затем запустите анализ:
+В TextEdit замените `website` на новый источник, например `mobile_app`. Сохраните файл через ⌘ + S и вернитесь в терминал. Затем запустите анализ:
 
 ```bash
 python -m streamstats analyze "$demo_dir/events.jsonl" --format jsonl --output "$demo_dir/report.json"
